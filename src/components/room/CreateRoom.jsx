@@ -76,9 +76,30 @@ export default function CreateRoom() {
                                         id="price" 
                                         className="form-control"
                                         value={room.price} 
-                                        onChange={(e) => setRoom({...room, price: e.target.value})}
+                                        onChange={(e) => setRoom({...room, price: Number(e.target.value)})}
                                         required
                                     />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="photo" className="form-label">Proto</label>
+                                    <input 
+                                        type="file" 
+                                        id="photo"
+                                        name="photo"
+                                        className="form-control"
+                                        onChange={(e) => setRoom({ ...room, photo: e.target.value })}
+                                    />
+                                    { imagePreview && (
+                                        <img 
+                                            src={imagePreview} 
+                                            alt="preview image" 
+                                            style={{maxWidth: "400px", maxHeight: "400px"}}
+                                            className="mb-3"
+                                        />
+                                    )}
+                                </div>
+                                <div className="d-grid d-md-flex mt-2">
+                                    <button type="submit" className="btn btn-outline-primary">Save room</button>
                                 </div>
                             </form>
                     </div>
