@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { addRoom } from "../../utils/ApiFunction";
+import RoomTypeSelector from "../common/RoomTypeSelector";
 
 export default function CreateRoom() {
-    const { room, setRoom } = useState({
+    const [room, setRoom] = useState({
         photo: null,
         roomType: "",
-        price: 0.0
+        price: 0
     });
+    
     const [imagePreview, setImagePreview] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -36,23 +38,29 @@ export default function CreateRoom() {
     async function formSubmitHandler(e) {
         e.preventDefault();
 
-        try {
-            const response = await addRoom(room.photo, room.roomType, room.price);
+        console.log(room);
+
+        // try {
+        //     const response = await addRoom(room.photo, room.roomType, room.price);
             
-            if (response !== undefined) {
-                setSuccessMessage("A new room was created");
-                setErrorMessage("");
-                setRoom({
-                    photo: null,
-                    roomType: "",
-                    price: 0.0
-                });
-            } else {
-                setErrorMessage("Error creating room");
-            }
-        } catch (e) {
-            setErrorMessage(e.message);
-        }
+        //     if (response !== undefined) {
+        //         setSuccessMessage("A new room was created");
+        //         setErrorMessage("");
+        //         setRoom({
+        //             photo: null,
+        //             roomType: "",
+        //             price: 0
+        //         });
+        //     } else {
+        //         setErrorMessage("Error creating room");
+        //     }
+        // } catch (e) {
+        //     setErrorMessage(e.message);
+        // }
+    }
+
+    function roomSelectHandler(e) {
+        setRoom({...room, roomType: e.target.value});
     }
 
     return (
@@ -65,7 +73,7 @@ export default function CreateRoom() {
                                 <div className="mb-3">
                                     <label htmlFor="roomType" className="form-label">Room type</label>
                                     <div>
-
+                                        <RoomTypeSelector handleRoomInputChange={roomSelectHandler} newRoom={room} />
                                     </div>
                                 </div>
                                 <div className="mb-3">
@@ -75,7 +83,7 @@ export default function CreateRoom() {
                                         name="price" 
                                         id="price" 
                                         className="form-control"
-                                        value={room.price} 
+                                        value={room.price}
                                         onChange={(e) => setRoom({...room, price: Number(e.target.value)})}
                                         required
                                     />
@@ -109,4 +117,4 @@ export default function CreateRoom() {
     );
 }
 
-// // https://youtu.be/0XJu4Nnl0Kc?si=t4JHWswfelmeb2tx&t=7608
+// https://youtu.be/0XJu4Nnl0Kc?si=u15pVCPo10hOYShh&t=9083
